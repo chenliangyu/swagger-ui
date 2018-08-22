@@ -25,10 +25,13 @@ const primitive = (schema) => {
 }
 
 
-export const sampleFromSchema = (schema, config={}) => {
-  let { type, example, properties, additionalProperties, items } = objectify(schema)
-  let { includeReadOnly, includeWriteOnly } = config
 
+export const sampleFromSchema = (schema, config={}) => {
+  let schemaObject = objectify(schema)
+  let { type, example, properties, additionalProperties, items } = schemaObject
+  let { includeReadOnly, includeWriteOnly } = config
+  let arrayComposeTypes = ["oneOf","anyOf","allOf"]
+  let objectComposeTypes = ["not"]
 
   if(example !== undefined) {
     return deeplyStripKey(example, "$$ref", (val) => {
@@ -39,6 +42,24 @@ export const sampleFromSchema = (schema, config={}) => {
   }
 
   if(!type) {
+    let at = arrayComposeTypes.find((arrayComposeType) => {
+      return schemaObject.hasOwnProperty(arrayComposeType)
+    })
+    if(Array.isArray(schemaObject[at])){
+      let r = `${at} Example Value: \n\n`
+      schemaObject[at].forEach((i,index) => {
+        const example = JSON.stringify(sampleFromSchema(i, config),null,2)
+        r += `${index + 1}. ` + example + "\n\n" 
+      })
+      return r
+    }
+    let ot = objectComposeTypes.find((objectComposeType) => {
+      return schemaObject.hasOwnProperty(objectComposeType)
+    })
+    if(schemaObject[ot]){
+      return sampleFromSchema(schemaObject[ot])
+    }
+
     if(properties) {
       type = "object"
     } else if(items) {

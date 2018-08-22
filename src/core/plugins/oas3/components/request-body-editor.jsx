@@ -69,6 +69,8 @@ export default class RequestBodyEditor extends PureComponent {
     let { requestBody, mediaType } = this.props
     let mediaTypeValue = requestBody.getIn(["content", explicitMediaType || mediaType])
     let schema = mediaTypeValue.get("schema").toJS()
+    let examples = mediaTypeValue.get("examples")
+    if( examples && examples.size )return examples
     let mediaTypeExample = mediaTypeValue.get("example") !== undefined ? stringify(mediaTypeValue.get("example")) : null
 
     return mediaTypeExample || getSampleSchema(schema, explicitMediaType || mediaType, {
