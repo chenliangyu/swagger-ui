@@ -2,7 +2,8 @@ const path = require("path")
 const styleRules = require("./webpack.dist-style.config.js")
 
 let rules = [
-  { test: /\.(worker\.js)(\?.*)?$/,
+  {
+    test: /\.(worker\.js)(\?.*)?$/,
     use: [
       {
         loader: "worker-loader",
@@ -19,7 +20,7 @@ let rules = [
 module.exports = require("./make-webpack-config.js")(rules, {
   _special: {
     separateStylesheets: true,
-    minimize: true,
+    minimize: false,
     mangle: true,
     sourcemaps: true,
   },
@@ -31,7 +32,7 @@ module.exports = require("./make-webpack-config.js")(rules, {
     ]
   },
 
-  output:  {
+  output: {
     path: path.join(__dirname, "dist"),
     publicPath: "/dist",
     library: "SwaggerUIStandalonePreset",
