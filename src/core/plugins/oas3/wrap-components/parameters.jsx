@@ -10,12 +10,12 @@ const eachMap = (iterable, fn) => iterable.valueSeq().filter(Im.Map.isMap).map(f
 class Parameters extends Component {
 
   constructor(props) {
-   super(props)
-   this.state = {
-     callbackVisible: false,
-     parametersVisible: true
-   }
- }
+    super(props)
+    this.state = {
+      callbackVisible: false,
+      parametersVisible: true
+    }
+  }
 
   static propTypes = {
     parameters: ImPropTypes.list.isRequired,
@@ -45,16 +45,16 @@ class Parameters extends Component {
     onChangeKey: [],
   }
 
-  onChange = ( param, value, isXml ) => {
+  onChange = (param, value, isXml) => {
     let {
       specActions: { changeParamByIdentity },
       onChangeKey,
     } = this.props
 
-    changeParamByIdentity( onChangeKey, param, value, isXml)
+    changeParamByIdentity(onChangeKey, param, value, isXml)
   }
 
-  onChangeConsumesWrapper = ( val ) => {
+  onChangeConsumesWrapper = (val) => {
     let {
       specActions: { changeConsumesValue },
       onChangeKey
@@ -64,12 +64,12 @@ class Parameters extends Component {
   }
 
   toggleTab = (tab) => {
-    if(tab === "parameters"){
+    if (tab === "parameters") {
       return this.setState({
         parametersVisible: true,
         callbackVisible: false
       })
-    }else if(tab === "callbacks"){
+    } else if (tab === "callbacks") {
       return this.setState({
         callbackVisible: true,
         parametersVisible: false
@@ -77,7 +77,7 @@ class Parameters extends Component {
     }
   }
 
-  render(){
+  render() {
 
     let {
       onTryoutClick,
@@ -98,6 +98,7 @@ class Parameters extends Component {
       operation
     } = this.props
 
+
     const ParameterRow = getComponent("parameterRow")
     const TryItOutButton = getComponent("TryItOutButton")
     const ContentType = getComponent("contentType")
@@ -110,6 +111,9 @@ class Parameters extends Component {
     const requestBody = operation.get("requestBody")
     const requestBodySpecPath = specPath.slice(0, -1).push("requestBody") // remove the "parameters" part
 
+    //eslint-disable-next-line
+    console.log("in wrappedComponent:", requestBody, requestBody.toJS())
+
     return (
       <div className="opblock-section">
         <div className="opblock-section-header">
@@ -117,7 +121,7 @@ class Parameters extends Component {
             <div onClick={() => this.toggleTab("parameters")} className={`tab-item ${this.state.parametersVisible && "active"}`}>
               <h4 className="opblock-title"><span>Parameters</span></h4>
             </div>
-            { operation.get("callbacks") ?
+            {operation.get("callbacks") ?
               (
                 <div onClick={() => this.toggleTab("callbacks")} className={`tab-item ${this.state.callbackVisible && "active"}`}>
                   <h4 className="opblock-title"><span>Callbacks</span></h4>
@@ -125,12 +129,12 @@ class Parameters extends Component {
               ) : null
             }
           </div>
-            { allowTryItOut ? (
-              <TryItOutButton enabled={ tryItOutEnabled } onCancelClick={ onCancelClick } onTryoutClick={ onTryoutClick } />
-            ) : null }
+          {allowTryItOut ? (
+            <TryItOutButton enabled={tryItOutEnabled} onCancelClick={onCancelClick} onTryoutClick={onTryoutClick} />
+          ) : null}
         </div>
         {this.state.parametersVisible ? <div className="parameters-container">
-          { !parameters.count() ? <div className="opblock-description-wrapper"><p>No parameters</p></div> :
+          {!parameters.count() ? <div className="opblock-description-wrapper"><p>No parameters</p></div> :
             <div className="table-container">
               <table className="parameters">
                 <thead>
@@ -142,33 +146,33 @@ class Parameters extends Component {
                 <tbody>
                   {
                     eachMap(parameters, (parameter, i) => (
-                      <ParameterRow fn={ fn }
-                        getComponent={ getComponent }
+                      <ParameterRow fn={fn}
+                        getComponent={getComponent}
                         specPath={specPath.push(i)}
-                        getConfigs={ getConfigs }
-                        rawParam={ parameter }
-                        param={ specSelectors.parameterWithMetaByIdentity(pathMethod, parameter) }
-                        key={ parameter.get( "name" ) }
-                        onChange={ this.onChange }
+                        getConfigs={getConfigs}
+                        rawParam={parameter}
+                        param={specSelectors.parameterWithMetaByIdentity(pathMethod, parameter)}
+                        key={parameter.get("name")}
+                        onChange={this.onChange}
                         onChangeConsumes={this.onChangeConsumesWrapper}
-                        specSelectors={ specSelectors }
-                        specActions={ specActions }
-                        pathMethod={ pathMethod }
-                        isExecute={ isExecute }/>
+                        specSelectors={specSelectors}
+                        specActions={specActions}
+                        pathMethod={pathMethod}
+                        isExecute={isExecute} />
                     )).toArray()
                   }
                 </tbody>
               </table>
             </div>
           }
-        </div> : "" }
+        </div> : ""}
 
         {this.state.callbackVisible ? <div className="callbacks-container opblock-description-wrapper">
           <Callbacks
             callbacks={Map(operation.get("callbacks"))}
             specPath={specPath.slice(0, -1).push("callbacks")}
           />
-        </div> : "" }
+        </div> : ""}
         {
           isOAS3() && requestBody && this.state.parametersVisible &&
           <div className="opblock-section">
@@ -177,7 +181,7 @@ class Parameters extends Component {
               <label>
                 <ContentType
                   value={oas3Selectors.requestContentType(...pathMethod)}
-                  contentTypes={ requestBody.get("content").keySeq() }
+                  contentTypes={requestBody.get("content").keySeq()}
                   onChange={(value) => {
                     oas3Actions.setRequestContentType({ value, pathMethod })
                   }}
@@ -191,7 +195,7 @@ class Parameters extends Component {
                 requestBodyValue={oas3Selectors.requestBodyValue(...pathMethod) || Map()}
                 isExecute={isExecute}
                 onChange={(value, path) => {
-                  if(path) {
+                  if (path) {
                     const lastValue = oas3Selectors.requestBodyValue(...pathMethod)
                     const usableValue = Map.isMap(lastValue) ? lastValue : Map()
                     return oas3Actions.setRequestBodyValue({
@@ -201,7 +205,7 @@ class Parameters extends Component {
                   }
                   oas3Actions.setRequestBodyValue({ value, pathMethod })
                 }}
-                contentType={oas3Selectors.requestContentType(...pathMethod)}/>
+                contentType={oas3Selectors.requestContentType(...pathMethod)} />
             </div>
           </div>
         }

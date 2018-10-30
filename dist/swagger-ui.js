@@ -13125,6 +13125,7 @@ Parameters = function (_Component) {(0, _inherits3.default)(Parameters, _Compone
 
       this.props,onTryoutClick = _props.onTryoutClick,onCancelClick = _props.onCancelClick,parameters = _props.parameters,allowTryItOut = _props.allowTryItOut,tryItOutEnabled = _props.tryItOutEnabled,fn = _props.fn,getComponent = _props.getComponent,getConfigs = _props.getConfigs,specSelectors = _props.specSelectors,specActions = _props.specActions,oas3Actions = _props.oas3Actions,oas3Selectors = _props.oas3Selectors,pathMethod = _props.pathMethod,specPath = _props.specPath,operation = _props.operation;
 
+
       var ParameterRow = getComponent("parameterRow");
       var TryItOutButton = getComponent("TryItOutButton");
       var ContentType = getComponent("contentType");
@@ -13136,6 +13137,9 @@ Parameters = function (_Component) {(0, _inherits3.default)(Parameters, _Compone
 
       var requestBody = operation.get("requestBody");
       var requestBodySpecPath = specPath.slice(0, -1).push("requestBody"); // remove the "parameters" part
+
+      //eslint-disable-next-line
+      console.log("in wrappedComponent:", requestBody, requestBody.toJS());
 
       return (
         _react2.default.createElement("div", { className: "opblock-section" },
@@ -15259,7 +15263,7 @@ if (null !== "production" && typeof window !== "undefined") {
 }
 
 // eslint-disable-next-line no-undef
-var _buildInfo = {"PACKAGE_VERSION":"3.18.1","GIT_COMMIT":"ga701f49","GIT_DIRTY":true,"HOSTNAME":"binaviddeMBP.localdomain","BUILD_TIME":"Tue, 30 Oct 2018 10:48:31 GMT"},GIT_DIRTY = _buildInfo.GIT_DIRTY,GIT_COMMIT = _buildInfo.GIT_COMMIT,PACKAGE_VERSION = _buildInfo.PACKAGE_VERSION,HOSTNAME = _buildInfo.HOSTNAME,BUILD_TIME = _buildInfo.BUILD_TIME;
+var _buildInfo = {"PACKAGE_VERSION":"3.18.1","GIT_COMMIT":"g5c1a77a","GIT_DIRTY":true,"HOSTNAME":"binaviddeMBP.localdomain","BUILD_TIME":"Tue, 30 Oct 2018 11:53:57 GMT"},GIT_DIRTY = _buildInfo.GIT_DIRTY,GIT_COMMIT = _buildInfo.GIT_COMMIT,PACKAGE_VERSION = _buildInfo.PACKAGE_VERSION,HOSTNAME = _buildInfo.HOSTNAME,BUILD_TIME = _buildInfo.BUILD_TIME;
 
 module.exports = function SwaggerUI(opts) {
 
