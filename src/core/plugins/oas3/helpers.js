@@ -2,7 +2,9 @@ import React from "react"
 
 export function isOAS3(jsSpec) {
   const oasVersion = jsSpec.get("openapi")
-  if(typeof oasVersion !== "string") {
+  //eslint-disable-next-line
+  console.log("oasVersion:", oasVersion)
+  if (typeof oasVersion !== "string") {
     return false
   }
 
@@ -15,7 +17,7 @@ export function isOAS3(jsSpec) {
 
 export function isSwagger2(jsSpec) {
   const swaggerVersion = jsSpec.get("swagger")
-  if(typeof swaggerVersion !== "string") {
+  if (typeof swaggerVersion !== "string") {
     return false
   }
 
@@ -23,11 +25,13 @@ export function isSwagger2(jsSpec) {
 }
 
 export function OAS3ComponentWrapFactory(Component) {
-  return (Ori, system) => (props) => {
-    if(system && system.specSelectors && system.specSelectors.specJson) {
+  return (Ori, system, componentName) => (props) => {
+    if (system && system.specSelectors && system.specSelectors.specJson) {
       const spec = system.specSelectors.specJson()
-
-      if(isOAS3(spec)) {
+      const isOAS3Spec = isOAS3(spec)
+      //eslint-disable-next-line
+      console.log("componentName:", componentName, "isOAS3Spec:", isOAS3Spec)
+      if (isOAS3(spec)) {
         return <Component {...props} {...system} Ori={Ori}></Component>
       } else {
         return <Ori {...props}></Ori>

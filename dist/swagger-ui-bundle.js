@@ -8012,6 +8012,8 @@ isOAS3 = isOAS3;exports.
 
 
 
+
+
 isSwagger2 = isSwagger2;exports.
 
 
@@ -8021,11 +8023,13 @@ isSwagger2 = isSwagger2;exports.
 
 
 
-OAS3ComponentWrapFactory = OAS3ComponentWrapFactory;var _react = __webpack_require__(0);var _react2 = _interopRequireDefault(_react);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function isOAS3(jsSpec) {var oasVersion = jsSpec.get("openapi");if (typeof oasVersion !== "string") {return false;} // we gate against `3.1` becasue we want to explicitly opt into supporting it
+OAS3ComponentWrapFactory = OAS3ComponentWrapFactory;var _react = __webpack_require__(0);var _react2 = _interopRequireDefault(_react);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function isOAS3(jsSpec) {var oasVersion = jsSpec.get("openapi"); //eslint-disable-next-line
+  console.log("oasVersion:", oasVersion);if (typeof oasVersion !== "string") {return false;} // we gate against `3.1` becasue we want to explicitly opt into supporting it
   // at some point in the future -- KS, 7/2018
   // starts with, but is not `3.0.` exactly
-  return oasVersion.startsWith("3.0.") && oasVersion.length > 4;}function isSwagger2(jsSpec) {var swaggerVersion = jsSpec.get("swagger");if (typeof swaggerVersion !== "string") {return false;}return swaggerVersion.startsWith("2.0");}function OAS3ComponentWrapFactory(Component) {return function (Ori, system) {return function (props) {if (system && system.specSelectors && system.specSelectors.specJson) {var spec = system.specSelectors.specJson();
-
+  return oasVersion.startsWith("3.0.") && oasVersion.length > 4;}function isSwagger2(jsSpec) {var swaggerVersion = jsSpec.get("swagger");if (typeof swaggerVersion !== "string") {return false;}return swaggerVersion.startsWith("2.0");}function OAS3ComponentWrapFactory(Component) {return function (Ori, system, componentName) {return function (props) {if (system && system.specSelectors && system.specSelectors.specJson) {var spec = system.specSelectors.specJson();var isOAS3Spec = isOAS3(spec);
+        //eslint-disable-next-line
+        console.log("componentName:", componentName, "isOAS3Spec:", isOAS3Spec);
         if (isOAS3(spec)) {
           return _react2.default.createElement(Component, (0, _extends3.default)({}, props, system, { Ori: Ori }));
         } else {
@@ -40530,7 +40534,7 @@ if (null !== "production" && typeof window !== "undefined") {
 }
 
 // eslint-disable-next-line no-undef
-var _buildInfo = {"PACKAGE_VERSION":"3.18.1","GIT_COMMIT":"g5c1a77a","GIT_DIRTY":true,"HOSTNAME":"binaviddeMBP.localdomain","BUILD_TIME":"Tue, 30 Oct 2018 11:53:57 GMT"},GIT_DIRTY = _buildInfo.GIT_DIRTY,GIT_COMMIT = _buildInfo.GIT_COMMIT,PACKAGE_VERSION = _buildInfo.PACKAGE_VERSION,HOSTNAME = _buildInfo.HOSTNAME,BUILD_TIME = _buildInfo.BUILD_TIME;
+var _buildInfo = {"PACKAGE_VERSION":"3.18.1","GIT_COMMIT":"gbce193c","GIT_DIRTY":true,"HOSTNAME":"binaviddeMBP.localdomain","BUILD_TIME":"Tue, 30 Oct 2018 12:05:20 GMT"},GIT_DIRTY = _buildInfo.GIT_DIRTY,GIT_COMMIT = _buildInfo.GIT_COMMIT,PACKAGE_VERSION = _buildInfo.PACKAGE_VERSION,HOSTNAME = _buildInfo.HOSTNAME,BUILD_TIME = _buildInfo.BUILD_TIME;
 
 module.exports = function SwaggerUI(opts) {
 
@@ -41570,7 +41574,7 @@ Store = function () {
 
       if (Array.isArray(res)) {
         return res.reduce(function (ori, wrapper) {
-          return wrapper(ori, _this3.getSystem());
+          return wrapper(ori, _this3.getSystem(), component);
         });
       }
       if (typeof component !== "undefined") {
