@@ -17779,9 +17779,12 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.memoizedSa
 
 
 
+
+
+
 createXMLExample = createXMLExample;var _utils = __webpack_require__(12);var _xml = __webpack_require__(662);var _xml2 = _interopRequireDefault(_xml);var _memoizee = __webpack_require__(675);var _memoizee2 = _interopRequireDefault(_memoizee);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var primitives = { "string": function string() {return "string";}, "string_email": function string_email() {return "user@example.com";}, "string_date-time": function string_dateTime() {return new Date().toISOString();}, "number": function number() {return 0;}, "number_float": function number_float() {return 0.0;}, "integer": function integer() {return 0;}, "boolean": function boolean(schema) {return typeof schema.default === "boolean" ? schema.default : true;} };var primitive = function primitive(schema) {schema = (0, _utils.objectify)(schema);var _schema = schema,type = _schema.type,format = _schema.format;var fn = primitives[type + "_" + format] || primitives[type];if ((0, _utils.isFunc)(fn)) return fn(schema);return "Unknown Type: " + schema.type;};var sampleFromSchema = exports.sampleFromSchema = function sampleFromSchema(schema) {var config = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};var schemaObject = (0, _utils.objectify)(schema);var type = schemaObject.type,example = schemaObject.example,properties = schemaObject.properties,additionalProperties = schemaObject.additionalProperties,items = schemaObject.items;var includeReadOnly = config.includeReadOnly,includeWriteOnly = config.includeWriteOnly;var arrayComposeTypes = ["oneOf", "anyOf", "allOf"];var objectComposeTypes = ["not"];if (example !== undefined) {return (0, _utils.deeplyStripKey)(example, "$$ref", function (val) {// do a couple of quick sanity tests to ensure the value
       // looks like a $$ref that swagger-client generates.
-      return typeof val === "string" && val.indexOf("#") > -1;});}if (!type) {var at = arrayComposeTypes.find(function (arrayComposeType) {return schemaObject.hasOwnProperty(arrayComposeType);});if (Array.isArray(schemaObject[at])) {if (at === "allOf") {return schemaObject[at].reduce(function (result, schema, config) {var example = sampleFromSchema(schema, config);return (0, _extends3.default)({}, result, example);});} else {return sampleFromSchema(schemaObject[at][0], config);}}var ot = objectComposeTypes.find(function (objectComposeType) {return schemaObject.hasOwnProperty(objectComposeType);});if (schemaObject[ot]) {return sampleFromSchema(schemaObject[ot]);}if (properties) {type = "object";} else if (items) {type = "array";} else {return;}}if (type === "object") {var props = (0, _utils.objectify)(properties);var obj = {};for (var name in props) {if (props[name] && props[name].readOnly && !includeReadOnly) {continue;}if (props[name] && props[name].writeOnly && !includeWriteOnly) {continue;}obj[name] = sampleFromSchema(props[name], config);}if (additionalProperties === true) {obj.additionalProp1 = {};} else if (additionalProperties) {var additionalProps = (0, _utils.objectify)(additionalProperties);var additionalPropVal = sampleFromSchema(additionalProps, config);for (var i = 1; i < 4; i++) {obj["additionalProp" + i] = additionalPropVal;}}return obj;}if (type === "array") {if (Array.isArray(items.anyOf)) {return items.anyOf.map(function (i) {return sampleFromSchema(i, config);});}if (Array.isArray(items.oneOf)) {return items.oneOf.map(function (i) {return sampleFromSchema(i, config);});}return [sampleFromSchema(items, config)];}if (schema["enum"]) {if (schema["default"]) return schema["default"];return (0, _utils.normalizeArray)(schema["enum"])[0];}if (type === "file") {return;}return primitive(schema);};var inferSchema = exports.inferSchema = function inferSchema(thing) {if (thing.schema) thing = thing.schema;if (thing.properties) {thing.type = "object";}return thing; // Hopefully this will have something schema like in it... `type` for example
+      return typeof val === "string" && val.indexOf("#") > -1;});}if (!type) {var at = arrayComposeTypes.find(function (arrayComposeType) {return schemaObject.hasOwnProperty(arrayComposeType);});if (Array.isArray(schemaObject[at])) {if (at === "allOf") {return schemaObject[at].reduce(function (result, schema, config) {var example = sampleFromSchema(schema, config);return (0, _extends3.default)({}, result, example);});} else {return sampleFromSchema(schemaObject[at][0], config);}}var ot = objectComposeTypes.find(function (objectComposeType) {return schemaObject.hasOwnProperty(objectComposeType);});if (schemaObject[ot]) {return sampleFromSchema(schemaObject[ot]);}if (properties) {type = "object";} else if (items) {type = "array";} else {return;}}if (type === "object") {var props = (0, _utils.objectify)(properties);var obj = {};for (var name in props) {if (props[name] && props[name].deprecated) {continue;}if (props[name] && props[name].readOnly && !includeReadOnly) {continue;}if (props[name] && props[name].writeOnly && !includeWriteOnly) {continue;}obj[name] = sampleFromSchema(props[name], config);}if (additionalProperties === true) {obj.additionalProp1 = {};} else if (additionalProperties) {var additionalProps = (0, _utils.objectify)(additionalProperties);var additionalPropVal = sampleFromSchema(additionalProps, config);for (var i = 1; i < 4; i++) {obj["additionalProp" + i] = additionalPropVal;}}return obj;}if (type === "array") {if (Array.isArray(items.anyOf)) {return items.anyOf.map(function (i) {return sampleFromSchema(i, config);});}if (Array.isArray(items.oneOf)) {return items.oneOf.map(function (i) {return sampleFromSchema(i, config);});}return [sampleFromSchema(items, config)];}if (schema["enum"]) {if (schema["default"]) return schema["default"];return (0, _utils.normalizeArray)(schema["enum"])[0];}if (type === "file") {return;}return primitive(schema);};var inferSchema = exports.inferSchema = function inferSchema(thing) {if (thing.schema) thing = thing.schema;if (thing.properties) {thing.type = "object";}return thing; // Hopefully this will have something schema like in it... `type` for example
 };var sampleXmlFromSchema = exports.sampleXmlFromSchema = function sampleXmlFromSchema(schema) {var config = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};var objectifySchema = (0, _utils.objectify)(schema);var type = objectifySchema.type,properties = objectifySchema.properties,additionalProperties = objectifySchema.additionalProperties,items = objectifySchema.items,example = objectifySchema.example;var includeReadOnly = config.includeReadOnly,includeWriteOnly = config.includeWriteOnly;var defaultValue = objectifySchema.default;var res = {};var _attr = {};var xml = schema.xml;var name = xml.name,prefix = xml.prefix,namespace = xml.namespace;var enumValue = objectifySchema.enum;var displayName = void 0,value = void 0;if (!type) {if (properties || additionalProperties) {type = "object";} else if (items) {type = "array";} else {return;}}name = name || "notagname"; // add prefix to name if exists
   displayName = (prefix ? prefix + ":" : "") + name;if (namespace) {//add prefix to namespace if exists
     var namespacePrefix = prefix ? "xmlns:" + prefix : "xmlns";_attr[namespacePrefix] = namespace;}if (type === "array") {if (items) {items.xml = items.xml || xml || {};items.xml.name = items.xml.name || xml.name;if (xml.wrapped) {res[displayName] = [];if (Array.isArray(example)) {example.forEach(function (v) {items.example = v;res[displayName].push(sampleXmlFromSchema(items, config));});} else if (Array.isArray(defaultValue)) {defaultValue.forEach(function (v) {items.default = v;res[displayName].push(sampleXmlFromSchema(items, config));});} else {res[displayName] = [sampleXmlFromSchema(items, config)];}if (_attr) {res[displayName].push({ _attr: _attr });}return res;}var _res = [];if (Array.isArray(example)) {example.forEach(function (v) {items.example = v;_res.push(sampleXmlFromSchema(items, config));});return _res;} else if (Array.isArray(defaultValue)) {defaultValue.forEach(function (v) {items.default = v;_res.push(sampleXmlFromSchema(items, config));});return _res;}return sampleXmlFromSchema(items, config);}}if (type === "object") {var props = (0, _utils.objectify)(properties);res[displayName] = [];example = example || {};for (var propName in props) {if (!props.hasOwnProperty(propName)) {continue;}if (props[propName].readOnly && !includeReadOnly) {continue;}if (props[propName].writeOnly && !includeWriteOnly) {continue;}props[propName].xml = props[propName].xml || {};if (props[propName].xml.attribute) {var enumAttrVal = Array.isArray(props[propName].enum) && props[propName].enum[0];var attrExample = props[propName].example;var attrDefault = props[propName].default;_attr[props[propName].xml.name || propName] = attrExample !== undefined && attrExample || example[propName] !== undefined && example[propName] || attrDefault !== undefined && attrDefault || enumAttrVal || primitive(props[propName]);} else {props[propName].xml.name = props[propName].xml.name || propName;if (props[propName].example === undefined && example[propName] !== undefined) {props[propName].example = example[propName];}var t = sampleXmlFromSchema(props[propName]);if (Array.isArray(t)) {res[displayName] = res[displayName].concat(t);} else {res[displayName].push(t);}}}if (additionalProperties === true) {res[displayName].push({ additionalProp: "Anything can be here" });} else if (additionalProperties) {res[displayName].push({ additionalProp: primitive(additionalProperties) });}if (_attr) {res[displayName].push({ _attr: _attr });}return res;}if (example !== undefined) {value = example;} else if (defaultValue !== undefined) {//display example if exists
@@ -37388,8 +37391,7 @@ Callbacks;
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });var _react = __webpack_require__(0);var _react2 = _interopRequireDefault(_react);
 var _propTypes = __webpack_require__(1);var _propTypes2 = _interopRequireDefault(_propTypes);
-var _reactImmutableProptypes = __webpack_require__(11);var _reactImmutableProptypes2 = _interopRequireDefault(_reactImmutableProptypes);var _utils = __webpack_require__(12);
-
+var _reactImmutableProptypes = __webpack_require__(11);var _reactImmutableProptypes2 = _interopRequireDefault(_reactImmutableProptypes);
 var _immutable = __webpack_require__(7);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 
 var RequestBody = function RequestBody(_ref)
@@ -37447,8 +37449,8 @@ var RequestBody = function RequestBody(_ref)
   contentType.indexOf("multipart/") === 0))
   {
     var JsonSchemaForm = getComponent("JsonSchemaForm");
-    var HighlightCode = getComponent("highlightCode");
-    var bodyProperties = requestBody.getIn(["content", contentType, "schema", "properties"], (0, _immutable.OrderedMap)());
+    var schemaForContentType = requestBody.getIn(["content", contentType, "schema"], (0, _immutable.OrderedMap)());
+    var bodyProperties = schemaForContentType.getIn(["properties"], (0, _immutable.OrderedMap)());
     requestBodyValue = _immutable.Map.isMap(requestBodyValue) ? requestBodyValue : (0, _immutable.OrderedMap)();
 
     return _react2.default.createElement("div", { className: "table-container" },
@@ -37456,9 +37458,11 @@ var RequestBody = function RequestBody(_ref)
         _react2.default.createElement("tbody", null,
 
           bodyProperties.map(function (prop, key) {
-            var required = prop.get("required");
+            var required = schemaForContentType.get("required", (0, _immutable.List)()).includes(key);
             var type = prop.get("type");
             var format = prop.get("format");
+            var currentValue = requestBodyValue.get(key);
+            var initialValue = prop.get("default") || prop.get("example") || "";
 
             var isFile = type === "string" && (format === "binary" || format === "base64");
 
@@ -37477,18 +37481,18 @@ var RequestBody = function RequestBody(_ref)
 
 
               _react2.default.createElement("td", { className: "col parameters-col_description" },
-                isExecute ?
-                _react2.default.createElement(JsonSchemaForm, {
-                  fn: fn,
-                  dispatchInitialValue: !isFile,
-                  schema: prop,
-                  getComponent: getComponent,
-                  value: requestBodyValue.get(key) || (0, _utils.getSampleSchema)(prop),
-                  onChange: function onChange(value) {
-                    _onChange(value, [key]);
-                  } }) :
-
-                _react2.default.createElement(HighlightCode, { className: "example", value: (0, _utils.getSampleSchema)(prop) })));
+                prop.get("description"),
+                isExecute ? _react2.default.createElement("div", null, _react2.default.createElement(JsonSchemaForm, {
+                    fn: fn,
+                    dispatchInitialValue: !isFile,
+                    schema: prop,
+                    description: key + " - " + prop.get("description"),
+                    getComponent: getComponent,
+                    value: currentValue === undefined ? initialValue : currentValue,
+                    onChange: function onChange(value) {
+                      _onChange(value, [key]);
+                    } })) :
+                null));
 
 
           }))));
@@ -38199,16 +38203,22 @@ var _parameters = __webpack_require__(444);var _parameters2 = _interopRequireDef
 var _versionStamp = __webpack_require__(445);var _versionStamp2 = _interopRequireDefault(_versionStamp);
 var _onlineValidatorBadge = __webpack_require__(446);var _onlineValidatorBadge2 = _interopRequireDefault(_onlineValidatorBadge);
 var _model = __webpack_require__(447);var _model2 = _interopRequireDefault(_model);
-var _jsonSchemaString = __webpack_require__(448);var _jsonSchemaString2 = _interopRequireDefault(_jsonSchemaString);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}exports.default =
+var _jsonSchemaString = __webpack_require__(448);var _jsonSchemaString2 = _interopRequireDefault(_jsonSchemaString);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 
-{
+var Components = {
   Markdown: _markdown2.default,
   AuthItem: _authItem2.default,
   parameters: _parameters2.default,
   JsonSchema_string: _jsonSchemaString2.default,
   VersionStamp: _versionStamp2.default,
   model: _model2.default,
-  onlineValidatorBadge: _onlineValidatorBadge2.default };
+  onlineValidatorBadge: _onlineValidatorBadge2.default
+
+
+  //eslint-disable-next-line
+};console.log(Components, _markdown2.default, _authItem2.default, _parameters2.default, _jsonSchemaString2.default, _versionStamp2.default, _onlineValidatorBadge2.default);exports.default =
+
+Components;
 
 /***/ }),
 /* 442 */
@@ -40516,7 +40526,7 @@ if (null !== "production" && typeof window !== "undefined") {
 }
 
 // eslint-disable-next-line no-undef
-var _buildInfo = {"PACKAGE_VERSION":"3.18.1","GIT_COMMIT":"gddf49d8","GIT_DIRTY":true,"HOSTNAME":"binaviddeMBP.localdomain","BUILD_TIME":"Tue, 30 Oct 2018 06:23:46 GMT"},GIT_DIRTY = _buildInfo.GIT_DIRTY,GIT_COMMIT = _buildInfo.GIT_COMMIT,PACKAGE_VERSION = _buildInfo.PACKAGE_VERSION,HOSTNAME = _buildInfo.HOSTNAME,BUILD_TIME = _buildInfo.BUILD_TIME;
+var _buildInfo = {"PACKAGE_VERSION":"3.18.1","GIT_COMMIT":"ga701f49","GIT_DIRTY":true,"HOSTNAME":"binaviddeMBP.localdomain","BUILD_TIME":"Tue, 30 Oct 2018 10:48:31 GMT"},GIT_DIRTY = _buildInfo.GIT_DIRTY,GIT_COMMIT = _buildInfo.GIT_COMMIT,PACKAGE_VERSION = _buildInfo.PACKAGE_VERSION,HOSTNAME = _buildInfo.HOSTNAME,BUILD_TIME = _buildInfo.BUILD_TIME;
 
 module.exports = function SwaggerUI(opts) {
 

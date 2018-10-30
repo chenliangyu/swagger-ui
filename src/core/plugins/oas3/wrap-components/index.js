@@ -6,7 +6,7 @@ import OnlineValidatorBadge from "./online-validator-badge"
 import Model from "./model"
 import JsonSchema_string from "./json-schema-string"
 
-export default {
+const Components = {
   Markdown,
   AuthItem,
   parameters,
@@ -15,3 +15,8 @@ export default {
   model: Model,
   onlineValidatorBadge: OnlineValidatorBadge,
 }
+
+//eslint-disable-next-line
+console.log(Components, Markdown, AuthItem, parameters, JsonSchema_string, VersionStamp, OnlineValidatorBadge)
+
+export default Components
